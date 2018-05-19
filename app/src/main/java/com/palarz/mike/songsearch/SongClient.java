@@ -18,7 +18,7 @@ public interface SongClient {
     String BASE_URL_ACCOUNTS = "https://accounts.spotify.com";
 
     @FormUrlEncoded
-    @POST("/api/token")
+    @POST("api/token")
     Call<TokenResponse> getAccessToken(@Header("Authorization") String encodedIDAndSecret, @Field("grant_type") String grantType);
 
 

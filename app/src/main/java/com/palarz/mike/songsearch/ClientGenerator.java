@@ -17,16 +17,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ClientGenerator {
 
-    private static String BASE_URL_ACCOUNTS = "https://accounts.spotify.com";
+    public static String mBaseURL = SongClient.BASE_URL_ACCOUNTS;
 
     private static OkHttpClient.Builder sClientBuilder = new OkHttpClient.Builder();
 
     private static Retrofit.Builder sRetrofitBuilder = new Retrofit.Builder()
-            .baseUrl(BASE_URL_ACCOUNTS)
+            .baseUrl(mBaseURL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(sClientBuilder.build());
 
     private static Retrofit sRetrofit = sRetrofitBuilder.build();
+
+    public static void changeBaseURL(String newBaseURL) {
+        mBaseURL = newBaseURL;
+
+        sRetrofitBuilder = new Retrofit.Builder()
+                .baseUrl(mBaseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(sClientBuilder.build());
+
+        sRetrofit = sRetrofitBuilder.build();
+    }
 
     public static <S> S createClient(Class<S> clientClass) {
         return sRetrofit.create(clientClass);
