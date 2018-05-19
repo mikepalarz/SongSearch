@@ -1,4 +1,4 @@
-package com.palarz.mike.booksearch;
+package com.palarz.mike.songsearch;
 
 import android.content.Context;
 import android.net.Uri;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by mike on 5/8/18.
  */
 
-public class BookAdapter extends ArrayAdapter<Book> {
+public class SongAdapter extends ArrayAdapter<Book> {
 
     private static class ViewHolder {
         public ImageView cover;
@@ -27,7 +27,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
         public TextView author;
     }
 
-    public BookAdapter(Context context, ArrayList<Book> books) {
+    public SongAdapter(Context context, ArrayList<Book> books) {
         super(context, 0, books);
     }
 

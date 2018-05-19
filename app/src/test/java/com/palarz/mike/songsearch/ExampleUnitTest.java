@@ -1,4 +1,4 @@
-package com.palarz.mike.booksearch;
+package com.palarz.mike.songsearch;
 
 import org.junit.Test;
 

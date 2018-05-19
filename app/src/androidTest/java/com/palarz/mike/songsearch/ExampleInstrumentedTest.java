@@ -1,4 +1,4 @@
-package com.palarz.mike.booksearch;
+package com.palarz.mike.songsearch;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
