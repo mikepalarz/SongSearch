@@ -21,11 +21,8 @@ public interface SongClient {
     @POST("api/token")
     Call<TokenResponse> getAccessToken(@Header("Authorization") String encodedIDAndSecret, @Field("grant_type") String grantType);
 
-    @GET("v1/search")
-    Call<Paging> searchForTrack(@Header("Authorization") String accessToken,
-                                @Query("q") String query,
-                                @Query("type") String type,
-                                @Query("market") String market);
+    @GET("v1/search?type=track&market=US")
+    Call<Paging> searchForTrack(@Header("Authorization") String accessToken, @Query("q") String query);
 
 
 }

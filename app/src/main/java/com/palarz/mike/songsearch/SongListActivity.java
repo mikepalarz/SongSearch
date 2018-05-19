@@ -98,7 +98,7 @@ public class SongListActivity extends AppCompatActivity {
             return;
         }
 
-        Call<Paging> call = mClient.searchForTrack("Bearer " + mAccessToken, query, "track", "US");
+        Call<Paging> call = mClient.searchForTrack("Bearer " + mAccessToken, query);
 
         call.enqueue(new Callback<Paging>() {
             @Override

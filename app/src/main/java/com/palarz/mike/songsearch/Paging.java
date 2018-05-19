@@ -8,6 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Paging {
 
+    // TODO: This needs to be redone... The only valid member variable is mTracks. The remaining
+    // member variables should actually be within mTracks. Take a look at the JSON response structure
+    // and it will all start making sense.
+
     // A link to the Web API endpoint returning the full result of the request.
     @SerializedName("href")
     private String mHref;
