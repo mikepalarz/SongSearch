@@ -14,15 +14,18 @@ import retrofit2.http.Query;
 
 public interface SongClient {
 
-    String BASE_URL = "http://openlibrary.org/";
-    String BASE_URL_ACCOUNTS = "https://accounts.spotify.com";
+    String BASE_URL_ACCOUNTS = "https://accounts.spotify.com/";
+    String BASE_URL_SEARCH = "https://api.spotify.com/";
 
     @FormUrlEncoded
     @POST("api/token")
     Call<TokenResponse> getAccessToken(@Header("Authorization") String encodedIDAndSecret, @Field("grant_type") String grantType);
 
+    @GET("v1/search")
+    Call<Paging> searchForTrack(@Header("Authorization") String accessToken,
+                                @Query("q") String query,
+                                @Query("type") String type,
+                                @Query("market") String market);
 
-    @GET("search.json")
-    Call<Paging> getAllBooks(@Query("q") String query);
 
 }

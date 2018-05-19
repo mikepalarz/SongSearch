@@ -2,9 +2,6 @@ package com.palarz.mike.songsearch;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by mike on 5/14/18.
  */
@@ -14,6 +11,10 @@ public class Paging {
     // A link to the Web API endpoint returning the full result of the request.
     @SerializedName("href")
     private String mHref;
+
+    // This can be anything...
+    @SerializedName("tracks")
+    private Tracks mTracks;
 
     // The maximum number of items in the response (as set in the query or by default).
     @SerializedName("limit")
@@ -37,6 +38,7 @@ public class Paging {
 
     public Paging() {
         this.mHref = "";
+        this.mTracks = new Tracks();
         this.mLimit = 0;
         this.mNext = "";
         this.mOffset = 0;
@@ -44,8 +46,9 @@ public class Paging {
         this.mTotal = 0;
     }
 
-    public Paging(String href, int limit, String next, int offset, String previous, int total) {
+    public Paging(String href, Tracks tracks, int limit, String next, int offset, String previous, int total) {
         this.mHref = href;
+        this.mTracks = tracks;
         this.mLimit = limit;
         this.mNext = next;
         this.mOffset = offset;
@@ -55,6 +58,10 @@ public class Paging {
 
     public String getHref() {
         return mHref;
+    }
+
+    public Tracks getTracks() {
+        return mTracks;
     }
 
     public int getLimit() {

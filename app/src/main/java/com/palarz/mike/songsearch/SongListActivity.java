@@ -3,6 +3,7 @@ package com.palarz.mike.songsearch;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +31,7 @@ public class SongListActivity extends AppCompatActivity {
     private SongAdapter mAdapter;
     private SongClient mClient;
     private ProgressBar mProgressBar;
+    private String mAccessToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,8 @@ public class SongListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book_list);
 
         mSeachResults = (ListView) findViewById(R.id.book_list_list_view);
-        ArrayList<Book> books = new ArrayList<>();
-        mAdapter = new SongAdapter(this, books);
+        ArrayList<Track> tracks = new ArrayList<>();
+        mAdapter = new SongAdapter(this, tracks);
         mSeachResults.setAdapter(mAdapter);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -60,12 +62,14 @@ public class SongListActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     tokenResponse = response.body();
                     Log.d(TAG, "Access token value: " + tokenResponse.getAccessToken());
+                    mAccessToken = tokenResponse.getAccessToken();
                 }
             }
 
             @Override
             public void onFailure(Call<TokenResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: request toString():" + call.request().toString());
+                mAccessToken = "";
             }
         });
     }
@@ -87,19 +91,28 @@ public class SongListActivity extends AppCompatActivity {
 
     private void fetchSongs(String query) {
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
+        ClientGenerator.changeBaseURL(SongClient.BASE_URL_SEARCH);
 
         mClient = ClientGenerator.createClient(SongClient.class);
-        Call<Paging> call = mClient.getAllBooks(query);
+        if (TextUtils.isEmpty(mAccessToken)) {
+            return;
+        }
+
+        Call<Paging> call = mClient.searchForTrack("Bearer " + mAccessToken, query, "track", "US");
+
         call.enqueue(new Callback<Paging>() {
             @Override
             public void onResponse(Call<Paging> call, Response<Paging> response) {
-                Log.d(TAG, "The full URL: " + response.toString());
-                Paging bookSearchResponse = response.body();
+                Paging paging = null;
                 if (response.isSuccessful()) {
+                    Log.d(TAG, "onResponse: The full URL: " + call.request().url());
                     mAdapter.clear();
-                    List<Book> books = bookSearchResponse.getBooks();
-                    for (Book book : books) {
-                        mAdapter.add(book);
+                    paging = response.body();
+                    // TODO: This really needs to be cleaned up... Tracks within tracks????
+                    Tracks tracks = paging.getTracks();
+                    List<Track> tracksList = tracks.getTracks();
+                    for (Track track : tracksList) {
+                        mAdapter.add(track);
                     }
                     mAdapter.notifyDataSetChanged();
                     mProgressBar.setVisibility(ProgressBar.GONE);
@@ -108,7 +121,7 @@ public class SongListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Paging> call, Throwable t) {
-                Log.d(TAG, "onFailure: The call object's toString():" + call.request().toString());
+                Log.d(TAG, "onFailure: The full URL: " + call.request().url());
                 mProgressBar.setVisibility(ProgressBar.GONE);
             }
         });

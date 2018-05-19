@@ -9,18 +9,16 @@ import java.util.List;
  * Created by mike on 5/19/18.
  */
 
-public class PagingTracks extends Paging {
+public class Tracks {
 
     @SerializedName("items")
     private List<Track> mTracks;
 
-    public PagingTracks() {
-        super();
+    public Tracks() {
         this.mTracks = new ArrayList<>();
     }
 
-    public PagingTracks(ArrayList<Track> tracks) {
-        super();
+    public Tracks(ArrayList<Track> tracks) {
         this.mTracks = tracks;
     }
 
