@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Created by mike on 5/8/18.
  */
 
-public class SongAdapter extends ArrayAdapter<Book> {
+public class SongAdapter extends ArrayAdapter<Track> {
 
     private static class ViewHolder {
         public ImageView cover;
@@ -27,13 +27,13 @@ public class SongAdapter extends ArrayAdapter<Book> {
         public TextView author;
     }
 
-    public SongAdapter(Context context, ArrayList<Book> books) {
-        super(context, 0, books);
+    public SongAdapter(Context context, ArrayList<Track> tracks) {
+        super(context, 0, tracks);
     }
 
     @Override
     public View getView(int position, @Nullable View convertView, ViewGroup parent) {
-        final Book currentBook = getItem(position);
+        final Track currentTrack = getItem(position);
         ViewHolder viewHolder;
         // We'll first check if an existing view is being reused. If not, then we will inflate the view
         if (convertView == null) {
@@ -49,10 +49,10 @@ public class SongAdapter extends ArrayAdapter<Book> {
         }
 
         // Finally, we populate the data into the list item using our Book object
-        viewHolder.title.setText(currentBook.getTitle());
-        viewHolder.author.setText(currentBook.getAuthorDisplay());
+        viewHolder.title.setText(currentTrack.getTitle());
+        viewHolder.author.setText(currentTrack.getArtistNames());
         Picasso.with(getContext())
-                .load(Uri.parse(currentBook.getCoverUrl()))
+                .load(Uri.parse(currentTrack.getAlbum().getLargeAlbumCover()))
                 .error(R.drawable.ic_no_cover)
                 .into(viewHolder.cover);
 

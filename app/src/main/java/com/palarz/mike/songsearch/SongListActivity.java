@@ -89,12 +89,12 @@ public class SongListActivity extends AppCompatActivity {
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
 
         mClient = ClientGenerator.createClient(SongClient.class);
-        Call<BookSearchResponse> call = mClient.getAllBooks(query);
-        call.enqueue(new Callback<BookSearchResponse>() {
+        Call<Paging> call = mClient.getAllBooks(query);
+        call.enqueue(new Callback<Paging>() {
             @Override
-            public void onResponse(Call<BookSearchResponse> call, Response<BookSearchResponse> response) {
+            public void onResponse(Call<Paging> call, Response<Paging> response) {
                 Log.d(TAG, "The full URL: " + response.toString());
-                BookSearchResponse bookSearchResponse = response.body();
+                Paging bookSearchResponse = response.body();
                 if (response.isSuccessful()) {
                     mAdapter.clear();
                     List<Book> books = bookSearchResponse.getBooks();
@@ -107,7 +107,7 @@ public class SongListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BookSearchResponse> call, Throwable t) {
+            public void onFailure(Call<Paging> call, Throwable t) {
                 Log.d(TAG, "onFailure: The call object's toString():" + call.request().toString());
                 mProgressBar.setVisibility(ProgressBar.GONE);
             }

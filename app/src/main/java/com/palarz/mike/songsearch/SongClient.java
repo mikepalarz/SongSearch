@@ -23,6 +23,6 @@ public interface SongClient {
 
 
     @GET("search.json")
-    Call<BookSearchResponse> getAllBooks(@Query("q") String query);
+    Call<Paging> getAllBooks(@Query("q") String query);
 
 }
