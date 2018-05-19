@@ -17,12 +17,12 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SongListActivity extends AppCompatActivity {
 
     private static final String TAG = SongListActivity.class.getSimpleName();
+
+    // TODO: I really, really need to figure out a better way to hide these...
     private static final String CLIENT_ID = "e31c0e021bb24dbcb39717172c68dd98";
     private static final String CLIENT_SECRET = "788b8ae21bb644c9a660c613cc912000";
 
@@ -46,12 +46,8 @@ public class SongListActivity extends AppCompatActivity {
     }
 
     private void retrieveAccessToken() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SongClient.BASE_URL_ACCOUNTS)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        mClient = retrofit.create(SongClient.class);
+        mClient = ClientGenerator.createClient(SongClient.class);
 
         String encodedString = encodeClientIDAndSecret();
 
@@ -91,12 +87,8 @@ public class SongListActivity extends AppCompatActivity {
 
     private void fetchSongs(String query) {
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(SongClient.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-        mClient = retrofit.create(SongClient.class);
+        mClient = ClientGenerator.createClient(SongClient.class);
         Call<BookSearchResponse> call = mClient.getAllBooks(query);
         call.enqueue(new Callback<BookSearchResponse>() {
             @Override
