@@ -22,7 +22,7 @@ public interface SongClient {
     Call<TokenResponse> getAccessToken(@Header("Authorization") String encodedIDAndSecret, @Field("grant_type") String grantType);
 
     @GET("v1/search?type=track&market=US")
-    Call<Paging> searchForTrack(@Header("Authorization") String accessToken, @Query("q") String query);
+    Call<RootJSONResponse> searchForTrack(@Header("Authorization") String accessToken, @Query("q") String query);
 
 
 }

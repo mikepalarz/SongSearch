@@ -1,5 +1,6 @@
 package com.palarz.mike.songsearch;
 
+import android.provider.DocumentsContract;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -98,20 +99,19 @@ public class SongListActivity extends AppCompatActivity {
             return;
         }
 
-        Call<Paging> call = mClient.searchForTrack("Bearer " + mAccessToken, query);
+        Call<RootJSONResponse> call = mClient.searchForTrack("Bearer " + mAccessToken, query);
 
-        call.enqueue(new Callback<Paging>() {
+        call.enqueue(new Callback<RootJSONResponse>() {
             @Override
-            public void onResponse(Call<Paging> call, Response<Paging> response) {
-                Paging paging = null;
+            public void onResponse(Call<RootJSONResponse> call, Response<RootJSONResponse> response) {
+                RootJSONResponse rootJSONResponse = null;
                 if (response.isSuccessful()) {
                     Log.d(TAG, "onResponse: The full URL: " + call.request().url());
                     mAdapter.clear();
-                    paging = response.body();
-                    // TODO: This really needs to be cleaned up... Tracks within tracks????
-                    Tracks tracks = paging.getTracks();
-                    List<Track> tracksList = tracks.getTracks();
-                    for (Track track : tracksList) {
+                    rootJSONResponse = response.body();
+                    PagingTracks pagingTracks = rootJSONResponse.getPagingTracks();
+                    List<Track> tracks = pagingTracks.getTracks();
+                    for (Track track : tracks) {
                         mAdapter.add(track);
                     }
                     mAdapter.notifyDataSetChanged();
@@ -120,7 +120,7 @@ public class SongListActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Paging> call, Throwable t) {
+            public void onFailure(Call<RootJSONResponse> call, Throwable t) {
                 Log.d(TAG, "onFailure: The full URL: " + call.request().url());
                 mProgressBar.setVisibility(ProgressBar.GONE);
             }

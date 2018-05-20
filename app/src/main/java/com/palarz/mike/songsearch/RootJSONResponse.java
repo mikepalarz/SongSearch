@@ -9,13 +9,17 @@ import com.google.gson.annotations.SerializedName;
 public class RootJSONResponse {
 
     @SerializedName("tracks")
-    Paging mPaging;
+    PagingTracks mPagingTracks;
 
     public RootJSONResponse() {
-        this.mPaging = null;
+        this.mPagingTracks = new PagingTracks();
     }
 
-    public RootJSONResponse(Paging paging) {
-        this.mPaging = paging;
+    public RootJSONResponse(PagingTracks pagingTracks) {
+        this.mPagingTracks = pagingTracks;
+    }
+
+    public PagingTracks getPagingTracks() {
+        return mPagingTracks;
     }
 }
