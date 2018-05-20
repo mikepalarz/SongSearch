@@ -16,7 +16,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 /**
- * Created by mike on 5/8/18.
+ * An adapter for the ListView within SongListActivity which displays the results of the
+ * search request.
  */
 
 public class SongAdapter extends ArrayAdapter<Track> {

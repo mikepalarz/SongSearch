@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by mike on 5/19/18.
+ * A class which represents an Album object from the Spotify Web API:
+ *
+ * https://beta.developer.spotify.com/documentation/web-api/reference/object-model/#album-object-full
+ *
  */
 
 public class Album {

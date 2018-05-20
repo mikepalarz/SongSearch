@@ -3,7 +3,12 @@ package com.palarz.mike.songsearch;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by mike on 5/19/18.
+ * A class which represents an image object from the Spotify Web API:
+ *
+ * https://beta.developer.spotify.com/documentation/web-api/reference/object-model/#image-object
+ *
+ * This class is used in order to provide an album cover when the search results are displayed
+ * to the user.
  */
 
 class AlbumCover {

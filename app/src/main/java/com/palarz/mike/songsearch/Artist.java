@@ -3,7 +3,12 @@ package com.palarz.mike.songsearch;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by mike on 5/19/18.
+ * A class which represents an Artist object from the Spotify Web API:
+ *
+ * https://beta.developer.spotify.com/documentation/web-api/reference/object-model/#artist-object-full
+ *
+ * This class is used in order to provide a String of artists for each track when the search
+ * results are displayed to the user.
  */
 
 public class Artist {
